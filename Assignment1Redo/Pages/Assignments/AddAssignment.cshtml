@@ -1,0 +1,64 @@
+﻿@page
+@model BottomTextLMS.Pages.Assignments.CreateModel
+
+@{
+    ViewData["Title"] = "Add Assignment";
+    ViewBag.ID = Model.prof.ID;
+    ViewBag.role = Model.prof.Role;
+}
+
+<h1>Create</h1>
+
+<h4>Assignment</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group" hidden>
+                <input asp-for="Assignment.ClassID" class="form-control" value="@Model.Class.ID" />
+            </div>
+            <div class="form-group" hidden>
+                <input asp-for="InstructID" class="form-control" value="@ViewBag.ID" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Assignment.Title" class="control-label"></label>
+                <input asp-for="Assignment.Title" class="form-control" />
+                <span asp-validation-for="Assignment.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Assignment.Description" class="control-label"></label>
+                <input asp-for="Assignment.Description" class="form-control" />
+                <span asp-validation-for="Assignment.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Assignment.DueDate" class="control-label"></label>
+                <input asp-for="Assignment.DueDate" class="form-control" />
+                <span asp-validation-for="Assignment.DueDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Assignment.MaxPoints" class="control-label"></label>
+                <input asp-for="Assignment.MaxPoints" class="form-control" />
+                <span asp-validation-for="Assignment.MaxPoints" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Assignment.AssignmentType" class="control-label"></label>
+                <select asp-for="Assignment.AssignmentType" class="form-control">
+                    <option value="File">File</option>
+                    <option value="Text Entry">Text Entry</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" asp-route-courseID="@Model.Class.ID" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="AssignmentList" asp-route-id="@ViewBag.ID" asp-route-courseID="@Model.Class.ID">Back to Assignments</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

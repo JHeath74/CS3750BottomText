@@ -1,0 +1,31 @@
+﻿@page
+@model BottomTextLMS.Pages.FileUpload.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>ProfileImage</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProfileImage.ProfileName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProfileImage.ProfileName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProfileImage.ProfileLocation)
+        </dt>
+        <dd class="col-sm-10">
+            <img src="~/images/Profile/@Html.DisplayFor(model => model.ProfileImage.ProfileName)" height="100" width="120" alt="@Html.DisplayFor(model => model.ProfileImage.ProfileName)" />
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.ProfileImage.ID">Edit</a> |
+    <a asp-page="UploadImage">Back to List</a>
+</div>

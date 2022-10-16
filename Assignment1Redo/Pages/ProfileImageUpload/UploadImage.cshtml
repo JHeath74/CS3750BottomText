@@ -1,0 +1,64 @@
+﻿@page
+@model BottomTextLMS.Pages.FileUpload.IndexModel
+
+@{
+       ViewBag.ID = Model.myUser.ID;
+       ViewBag.role = Model.myUser.Role;
+}
+<!DOCTYPE html>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+<h1>Upload Profile Image</h1>
+
+<form method="Post" enctype="multipart/form-data">
+    <p>
+        
+        <input hidden type="number" name="userID" value="@Model.myInfo.UserID" />
+        <input type="file" name="uploadfiles" />
+        <input type="submit" value="Save Image" class="btn btn-primary" />
+
+    </p>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+              @* @Html.DisplayNameFor(model => model.UserInfo[0].ProfileImageName)*@
+            </th>
+            <th>
+                Profile Image
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@*        @foreach (var item in Model.UserInfo)
+        {*@
+            <tr>
+                <td>
+                    
+                  @* @Html.DisplayFor(modelItem => item.ProfileImageName)*@
+                </td>
+                <td>
+                    <img src="~/Files/ProfileImage/@Url.Content(Model.myInfo.ProfileImageName)" height="100" width="120" />
+                </td>
+                <td>
+                 @*   <a asp-page="./Edit" asp-route-id="@item.">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>*@
+
+                </td>
+            </tr>
+       @* }*@
+
+    </tbody>
+</table>
+<html>
+
+<body>
+    <div>
+        <a asp-page="/Profile/UserProfile" asp-route-id="@Model.myUser.ID">Back to Profile</a>
+    </div>
+
+</body>
+</html>

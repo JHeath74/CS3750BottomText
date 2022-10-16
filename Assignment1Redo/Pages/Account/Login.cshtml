@@ -1,0 +1,59 @@
+﻿@page "/Account/Login"
+@model BottomTextLMS.Pages.Account.LoginModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Log in - BottomTextLMS</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <div class="container">
+        <main role="main" class="pb-3">
+            <h1>Login</h1>
+
+            <hr />
+            <div class="row">
+                <div class="col-md-4">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="myUser.Email" class="control-label"></label>
+                            <input asp-for="myUser.Email" class="form-control" />
+                            <span asp-validation-for="myUser.Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="myUser.Password" class="control-label"></label>
+                            <input asp-for="myUser.Password" class="form-control" />
+                            <span asp-validation-for="myUser.Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Login" class="btn btn-primary" id="login_button" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div>
+                <a asp-page="/Account/Signup">Sign Up</a>
+            </div>
+        </main>
+    </div>
+    
+</body>
+<footer class="border-top footer text-muted">
+    <div class="container">
+        &copy; 2021 - BottomTextLMS
+    </div>
+</footer>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+
+</html>

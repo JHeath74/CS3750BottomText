@@ -1,0 +1,44 @@
+﻿@page
+@model BottomTextLMS.Pages.FileUpload.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>ProfileImage</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" enctype="multipart/form-data">
+            <p>
+                <input type="file" name="uploadfiles"/>
+                <input type="submit" value="Save Image" class="btn btn-primary"/>
+            </p>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ProfileImage.ID" />
+            <div class="form-group">
+                <label asp-for="ProfileImage.ProfileName" class="control-label"></label>
+                <input asp-for="ProfileImage.ProfileName" class="form-control"readonly />
+                <span asp-validation-for="ProfileImage.ProfileName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProfileImage.ProfileLocation" class="control-label"></label>
+                <img src="~/images/Profile/@Html.DisplayFor(model => model.ProfileImage.ProfileName)" height="100" width="120" alt="@Html.DisplayFor(model => model.ProfileImage.ProfileName)" />
+                <span asp-validation-for="ProfileImage.ProfileLocation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="UploadImage">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

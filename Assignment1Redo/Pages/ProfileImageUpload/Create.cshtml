@@ -1,0 +1,41 @@
+﻿@page
+@model BottomTextLMS.Pages.FileUpload.CreateModel
+
+@{
+    ViewData["Title"] = "Add New Profile Image";
+    ViewBag.ID = Model.myUser.ID;
+    ViewBag.role = Model.myUser.Role;
+}
+
+<h1>Create</h1>
+
+<h4>ProfileImage</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ProfileImage.ProfileName" class="control-label"></label>
+                <input asp-for="ProfileImage.ProfileName" class="form-control" />
+                <span asp-validation-for="ProfileImage.ProfileName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProfileImage.ProfileLocation" class="control-label"></label>
+                <input asp-for="ProfileImage.ProfileLocation" class="form-control" />
+                <span asp-validation-for="ProfileImage.ProfileLocation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="../UploadImage">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

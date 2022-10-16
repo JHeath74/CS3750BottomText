@@ -1,0 +1,104 @@
+﻿@page
+@model BottomTextLMS.Pages.Calendar.CalendarModel
+@{
+    ViewBag.ID = Model.myUser.ID;
+    ViewBag.role = Model.myUser.Role;
+}
+
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8' />
+    <link href='~/lib/FullCalendar/lib/main.css' rel='stylesheet' />
+    <script src='~/lib/FullCalendar/lib/main.js'></script>
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/popper.js"></script>
+    <script src="https://unpkg.com/tooltip.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let calendarEl = document.getElementById('calendar');
+
+            let calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                eventRender: function (info) {
+                    var tooltip = new Tooltip(info.el, {
+                        title: info.event.extendedProps.title,
+                        placement: 'top',
+                        trigger: 'hover',
+                        container: 'body'
+                    });
+                }
+                /*events: [
+                    {
+                        title: 'test',
+                        start: '2021-10-06'
+                    },
+                ],*/
+            });
+
+            calendar.render();
+
+            var classes = @Html.Raw(Json.Serialize(@Model.list_classes));
+
+            for (let i = 0; i < Object.keys(classes).length; i++) {
+
+                var days = classes[i].daysOfWeek;
+                var split = days.split(',');
+                var array = [];
+
+                for (let i = 0; i < split.length; i++) {
+                    switch (split[i]) {
+                        case 'Su':
+                            array.push(0);
+                            break;
+                        case 'M':
+                            array.push(1);
+                            break;
+                        case 'T':
+                            array.push(2);
+                            break;
+                        case 'W':
+                            array.push(3);
+                            break;
+                        case 'Th':
+                            array.push(4);
+                            break;
+                        case 'F':
+                            array.push(5);
+                            break;
+                        case 'S':
+                            array.push(6);
+                            break;
+                    }
+                }
+
+                var event = {
+                    title: classes[i].className,
+                    startRecur: "2021-09-01",
+                    endRecur: "2022-01-01",
+                    display: 'block',
+                    daysOfWeek: array,
+                    startTime: classes[i].startTime.slice(classes[i].startTime.length - 8), //cuts out last 8 characters of classes[i].startTime which contains just the time in HH:MM:SS
+                    endTime: classes[i].endTime.slice(classes[i].endTime.length - 8),
+                };
+
+                calendar.addEvent(event)
+            }
+        });
+    </script>
+</head>
+<body>
+
+    <div id='calendar'></div>
+
+</body>
+
+</html>

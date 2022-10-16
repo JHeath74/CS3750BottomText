@@ -1,0 +1,198 @@
+﻿@page
+@model BottomTextLMS.Pages.UserProfileModel
+@{
+    ViewBag.ID = Model.myUser.ID;
+    ViewBag.role = Model.myUser.Role;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-lg-center">
+            <div class="col-8" style="background-color: lightgray">
+                <h1 class="p-2">User Profile</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-lg-center">
+        <div class="row justify-content-lg-center">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        @Model.myUser.FirstName @Model.myUser.LastName
+                    </tr>
+
+                    <tr>
+                        <td class="row justify-content-lg-center">
+                            <img src="~/Files/ProfileImage/@Url.Content(Model.myInfo.ProfileImageName)" height="150" width="150" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <a asp-page="/ProfileImageUpload/UploadImage" asp-route-id="@ViewBag.ID">Change Profile Image</a>
+                        </td>
+
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+<div class="row justify-content-lg-center">
+    <div class="col-6">
+        <div class="row">
+            <div class="col justify-content-lg-center" style="background-color: #FCFCFC ">
+                <form method="post">
+                    <div class="row justify-content-center p-2">
+                        <div class="col-8">
+                            <label asp-for="myUser.FirstName" class="control-label"></label>
+                            <input id="fName" asp-for="myUser.FirstName" class="form-control" readonly="@(true)" />
+                            <span asp-validation-for="myUser.FirstName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center p-2">
+                        <div class="col-8">
+                            <label asp-for="myUser.LastName" class="control-label"></label>
+                            <input id="lName" asp-for="myUser.LastName" class="form-control" readonly="@(true)" />
+                            <span asp-validation-for="myUser.LastName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center p-2">
+                        <div class="col-8">
+                            <label asp-for="myUser.Email" class="control-label"></label>
+                            <input asp-for="myUser.Email" class="form-control" readonly="@(true)" />
+                        </div>
+                    </div>
+                    <div class="row justify-content-center p-2">
+                        <div class="col-8">
+                            <label asp-for="myUser.BirthDate" class="control-label"></label>
+                            <input asp-for="myUser.BirthDate" class="form-control" readonly="@(true)" />
+                            <span asp-validation-for="myUser.BirthDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center p-2">
+                        <div class="col-8">
+                            <label asp-for="myInfo.AddressLine1" class="control-label"></label>
+                            <input id="addLine1" asp-for="myInfo.AddressLine1" class="form-control" readonly="@(true)" />
+                            <span asp-validation-for="myInfo.AddressLine1" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center p-2">
+                        <div class="col-8">
+                            <label asp-for="myInfo.AddressLine2" class="control-label"></label>
+                            <input id="addLine2" asp-for="myInfo.AddressLine2" class="form-control" readonly="@(true)" />
+                            <span asp-validation-for="myInfo.AddressLine2" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center p-2">
+                        <div class="col-8">
+                            <label asp-for="myInfo.City" class="control-label"></label>
+                            <input id="city" asp-for="myInfo.City" class="form-control" readonly="@(true)" />
+                            <span asp-validation-for="myInfo.City" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center p-2">
+                        <div class="col-8">
+                            <label asp-for="myInfo.State" class="control-label"></label>
+                            <input id="state" asp-for="myInfo.State" class="form-control" readonly="@(true)" />
+                            <span asp-validation-for="myInfo.State" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center p-2">
+                        <div class="col-8">
+                            <label asp-for="myInfo.Zipcode" class="control-label"></label>
+                            <input id="zip" asp-for="myInfo.Zipcode" class="form-control" readonly="@(true)" />
+                            <span asp-validation-for="myInfo.Zipcode" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center p-2">
+                        <div class="col-8">
+                            <label asp-for="myInfo.PhoneNumber" class="control-label"></label>
+                            <input id="phoneNum" asp-for="myInfo.PhoneNumber" class="form-control" readonly="@(true)" />
+                            <span asp-validation-for="myInfo.PhoneNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center p-2">
+                        <div class="col-8">
+                            <label asp-for="myInfo.Bio" class="control-label"></label>
+                            <textarea id="bioArea" asp-for="myInfo.Bio" class="form-control" readonly="@(true)"></textarea>
+                            <span asp-validation-for="myInfo.Bio" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center p-2">
+                        <div class="col-8">
+                            <label asp-for="myInfo.Link1" class="control-label"></label>
+                            <input id="link1" asp-for="myInfo.Link1" class="form-control" readonly="@(true)" />
+                            <span asp-validation-for="myInfo.Link1" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center p-2">
+                        <div class="col-8">
+                            <label asp-for="myInfo.Link2" class="control-label"></label>
+                            <input id="link2" asp-for="myInfo.Link2" class="form-control" readonly="@(true)" />
+                            <span asp-validation-for="myInfo.Link2" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center p-2">
+                        <div class="col-8">
+                            <label asp-for="myInfo.Link3" class="control-label"></label>
+                            <input id="link3" asp-for="myInfo.Link3" class="form-control" readonly="@(true)" />
+                            <span asp-validation-for="myInfo.Link3" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center p-3">
+                        <input id="saveBtn" type="submit" asp-page-handler="SaveProfile" asp-route-id="@ViewBag.ID" onclick="editInput()" value="Save" class="btn btn-primary" hidden="@(true)" />
+                    </div>
+                </form>
+                <div class="row justify-content-center p-3">
+                    <button id="editBtn" onclick="editInput()" class="btn btn-primary" style="background-color: gray">Edit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+<script>
+    function editInput() {
+        if (document.getElementById("fName").hasAttribute("readonly")) {
+            document.getElementById("fName").removeAttribute("readonly");
+            document.getElementById("lName").removeAttribute("readonly");
+            document.getElementById("addLine1").removeAttribute("readonly");
+            document.getElementById("addLine2").removeAttribute("readonly");
+            document.getElementById("city").removeAttribute("readonly");
+            document.getElementById("state").removeAttribute("readonly");
+            document.getElementById("zip").removeAttribute("readonly");
+            document.getElementById("phoneNum").removeAttribute("readonly");
+            document.getElementById("bioArea").removeAttribute("readonly");
+            document.getElementById("link1").removeAttribute("readonly");
+            document.getElementById("link2").removeAttribute("readonly");
+            document.getElementById("link3").removeAttribute("readonly");
+            document.getElementById("saveBtn").removeAttribute("hidden");
+            document.getElementById("editBtn").setAttribute("hidden", "@(true)");
+        } else {
+            document.getElementById("fName").setAttribute("readonly", "@(true)");
+            document.getElementById("lName").setAttribute("readonly", "@(true)");
+            document.getElementById("addLine1").setAttribute("readonly", "@(true)");
+            document.getElementById("addLine2").setAttribute("readonly", "@(true)");
+            document.getElementById("city").setAttribute("readonly", "@(true)");
+            document.getElementById("state").setAttribute("readonly", "@(true)");
+            document.getElementById("zip").setAttribute("readonly", "@(true)");
+            document.getElementById("phoneNum").setAttribute("readonly", "@(true)");
+            document.getElementById("bioArea").setAttribute("readonly", "@(true)");
+            document.getElementById("link1").setAttribute("readonly", "@(true)");
+            document.getElementById("link2").setAttribute("readonly", "@(true)");
+            document.getElementById("link3").setAttribute("readonly", "@(true)");
+            document.getElementById("saveBtn").setAttribute("hidden","@(true))");
+            document.getElementById("editBtn").removeAttribute("hidden");
+        }
+    }
+</script>

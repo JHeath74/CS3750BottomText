@@ -1,0 +1,63 @@
+﻿@page
+@model BottomTextLMS.Pages.Submissions.AllSubmissionsModel
+
+@{
+    ViewData["Title"] = "All Submissions";
+    ViewBag.ID = Model.prof.ID;
+    ViewBag.role = Model.prof.Role;
+}
+
+<h1>Submissions for @Model.Submission[0].Assignment.Title</h1>
+
+<p>
+    <a asp-page="AllAssignments" asp-route-id="@ViewBag.ID">Back to Assignments</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Student ID
+            </th>
+            <th>
+                Student Name
+            </th>
+            <th>
+                Submitted
+            </th>
+            <th>
+                Submission Time
+            </th>
+            <th>
+                Score
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Submission) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudentID)
+            </td>
+            <td>
+                @{
+                    Model.currentStudent = Model._context.Users.Where(s => s.ID == item.StudentID).FirstOrDefault();
+                }
+                @Model.currentStudent.FirstName @Model.currentStudent.LastName
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HasSubmitted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubmitTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PointsEarned)
+            </td>
+            <td>
+                <a asp-page="GradeSubmission" asp-route-id="@ViewBag.ID" asp-route-subID="@item.ID">Grade Submission</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

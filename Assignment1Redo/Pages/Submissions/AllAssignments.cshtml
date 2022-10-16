@@ -1,0 +1,59 @@
+﻿@page
+@model BottomTextLMS.Pages.Submissions.IndexModel
+
+@{
+    ViewData["Title"] = "All Assignments";
+    ViewBag.ID = Model.Instructor.ID;
+    ViewBag.role = Model.Instructor.Role;
+}
+
+<div class="mt-4"></div>
+<h1 class="mt-4 pt-4">All Assignments</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Assignment Title
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Assignment[0].DueDate)
+            </th>
+            <th>
+                Out of
+            </th>
+            <th>
+                Type
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Assignment[0].Class)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Assignment)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td style="width:20%">
+                    @Html.DisplayFor(modelItem => item.DueDate)
+                </td>
+                <td style="width:7%">
+                    @Html.DisplayFor(modelItem => item.MaxPoints)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AssignmentType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Class.ClassName)
+                </td>
+                <td style="width:15%">
+                    <a asp-page="AllSubmissions" asp-route-id="@ViewBag.ID" asp-route-assignID="@item.ID">View Submissions</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

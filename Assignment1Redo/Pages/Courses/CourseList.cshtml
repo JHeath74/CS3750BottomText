@@ -1,0 +1,66 @@
+﻿@page
+@model BottomTextLMS.Pages.Courses.IndexModel
+
+@{
+    ViewData["Title"] = "Current Class List";
+    ViewBag.ID = Model.myProf.ID;
+    ViewBag.role = Model.myProf.Role;
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="AddCourse" asp-route-id="@Model.myProf.ID" id="add_course_link">Add Class</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].ClassNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].ClassName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].DaysOfWeek)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].EndTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Class) {
+        <tr id="@item.ClassName">
+            <td>
+                @Html.DisplayFor(modelItem => item.ClassNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClassName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DaysOfWeek)
+            </td>
+            @{
+                string startVal = item.StartTime.ToString("hh:mm tt");
+            }
+            <td>
+                @Html.DisplayFor(modelItem => startVal)
+            </td>
+            @{
+                string endVal = item.EndTime.ToString("hh:mm tt");
+            }
+            <td>
+                @Html.DisplayFor(modelItem => endVal)
+            </td>
+            <td>
+                <a id="delete_@item.ClassName" asp-page="./DeleteCourse" asp-route-id="@ViewBag.ID" asp-route-courseID="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

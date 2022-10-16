@@ -1,0 +1,101 @@
+﻿@page
+@model BottomTextLMS.Pages.Assignments.IndexModel
+
+@{
+    ViewData["Title"] = Model.course.ClassNumber + " - Assignment List";
+    ViewBag.ID = Model.instructor.ID;
+    ViewBag.role = Model.instructor.Role;
+}
+
+<h1>@Html.DisplayFor(model => model.course.ClassName)</h1>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load("current", { packages: ["corechart"] });
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ["Grade", "Students", { role: "style" }],
+            ["A", @Model.grades["A"], "#24ACFC"],
+            ["A-", @Model.grades["A-"], "#24ACFC"],
+            ["B+", @Model.grades["B+"], "#24ACFC"],
+            ["B", @Model.grades["B"], "#24ACFC"],
+            ["B-", @Model.grades["B-"], "#24ACFC"],
+            ["C+", @Model.grades["C+"], "#24ACFC"],
+            ["C", @Model.grades["C"], "#24ACFC"],
+            ["C-", @Model.grades["C-"], "#24ACFC"],
+            ["D+", @Model.grades["D+"], "#24ACFC"],
+            ["D", @Model.grades["D"], "#24ACFC"],
+            ["D-", @Model.grades["D-"], "#24ACFC"],
+            ["E", @Model.grades["E"], "#24ACFC "]
+        ]);
+
+        var view = new google.visualization.DataView(data);
+        view.setColumns([0, 1,
+            {
+                calc: "stringify",
+                sourceColumn: 1,
+                type: "string",
+                role: "annotation"
+            },
+            2]);
+
+        var options = {
+            title: "Class Performance",
+            width: 750,
+            height: 400,
+            bar: { groupWidth: "60%" },
+            legend: { position: "none" },
+            vAxis: { format: '0' }
+        };
+        var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
+        chart.draw(view, options);
+    }
+</script>
+
+<div class="row align-baseline align-items-center">
+    <div class="mx-auto mb-3">
+        <div id="barchart_values" style="width: 900px; height: 300px;" align="center" class="mb-4 pb-4"></div>
+    </div>
+</div>
+
+<p class="mt-4 pt-4">
+    <a asp-page="AddAssignment" asp-route-id="@ViewBag.ID" asp-route-courseID="@Model.course.ID">Add Assignment</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Assignment[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Assignment[0].DueDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Assignment[0].AssignmentType)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Assignment)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DueDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AssignmentType)
+                </td>
+                <td>
+                    <a asp-page="/Submissions/AllSubmissions" asp-route-id="@Model.instructor.ID" asp-route-assignID="@item.ID">Submissions</a> |
+                    <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

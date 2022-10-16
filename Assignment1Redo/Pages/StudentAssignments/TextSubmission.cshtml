@@ -1,0 +1,184 @@
+﻿@page
+@model BottomTextLMS.Pages.StudentAssignments.TextSubmissionModel
+
+@{ ViewData["Title"] = "Submission";
+                ViewBag.ID = Model.student.ID;
+                ViewBag.role = Model.student.Role; }
+
+<html>
+<head>
+    <script src="https://cdn.plot.ly/plotly-2.4.2.min.js"></script>
+    <script src="plotly-2.4.2.min.js"></script>
+
+    <script type="text/javascript">
+        function drawPlot() {
+            var plot1 = [
+                {
+                    y: [@Model.classScores[0],
+                        @Model.classScores[1],
+                        @Model.classScores[1],
+                        @Model.classScores[2],
+                        @Model.classScores[3],
+                        @Model.classScores[4],
+                        @Model.classScores[5],
+                        @Model.classScores[6],
+                        @Model.classScores[7],
+                        @Model.classScores[8],
+                        @Model.classScores[9],
+                        @Model.classScores[10],
+                        @Model.classScores[11],
+                        @Model.classScores[12],
+                        @Model.classScores[13],
+                        @Model.classScores[14],
+                        @Model.classScores[15],
+                        @Model.classScores[16],
+                        @Model.classScores[17],
+                        @Model.classScores[18],
+                        @Model.classScores[19],
+                        @Model.classScores[20],
+                        @Model.classScores[21],
+                        @Model.classScores[22],
+                        @Model.classScores[23],
+                        @Model.classScores[24],
+                        @Model.classScores[25],
+                        @Model.classScores[26],
+                        @Model.classScores[27],
+                        @Model.classScores[28],
+                        @Model.classScores[29],
+                        @Model.classScores[30],
+                        @Model.classScores[31],
+                        @Model.classScores[32],
+                        @Model.classScores[33],
+                        @Model.classScores[34],
+                        @Model.classScores[35],
+                        @Model.classScores[36],
+                        @Model.classScores[37],
+                        @Model.classScores[38],
+                        @Model.classScores[39],
+                        @Model.classScores[40],
+                        @Model.classScores[41],
+                        @Model.classScores[42],
+                        @Model.classScores[43],
+                        @Model.classScores[44],
+                        @Model.classScores[45],
+                        @Model.classScores[46],
+                        @Model.classScores[47],
+                        @Model.classScores[48],
+                        @Model.classScores[49]],
+                    type: 'box',
+                    name: ''
+                }
+            ];
+
+            var layout = {
+                title: 'Class Performance',
+                width: 300,
+                height: 500,
+                shapes: [
+                    {
+                        type: 'line',
+                        xref: 'paper',
+                        x0: 0.47,
+                        y0: @Model.sub.PointsEarned,
+                        x1: 0.53,
+                        y1: @Model.sub.PointsEarned,
+                        line: {
+                            color: 'rgb(255, 0, 0)',
+                            width: 8,
+                        }
+                    }
+                ]
+            }
+
+            Plotly.newPlot('myDiv', plot1, layout, { staticPlot: true });
+        }
+    </script>
+
+</head>
+<body onload="javascript:drawPlot()">
+
+    <h1>Submission</h1>
+    <h4>@Html.DisplayFor(model => model.Assignment.Class.ClassName) - @Html.DisplayFor(model => model.Assignment.Title)</h4>
+
+    <div class="row">
+        <div class="col-9" style="padding-right:2em">
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Assignment.Description)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Assignment.Description)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Assignment.DueDate)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Assignment.DueDate)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Assignment.MaxPoints)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Assignment.MaxPoints)
+                </dd>
+                <dt class="col-sm-2">
+                    Type
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Assignment.AssignmentType)
+                </dd>
+                @if (Model.sub.PointsEarned != null)
+                {
+                    <dt class="col-sm-2">
+                        Grade:
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Model.sub.PointsEarned / @Model.Assignment.MaxPoints
+                    </dd>
+                }
+                @if (Model.sub.HasSubmitted == false)
+                {
+                    <dt class="col-sm-2">
+                        Status:
+                    </dt>
+                    <dd class="col-sm-10">
+                        Not Submitted
+                    </dd>
+                }
+                @if (Model.sub.HasSubmitted == true)
+                {
+                    <dt class="col-sm-2">
+                        Status:
+                    </dt>
+                    <dd class="col-sm-10">
+                        Submitted
+                    </dd>
+                }
+            </dl>
+        
+                <form method="post">
+                    <div>
+
+                        <textarea id="textArea" asp-for="sub.TextSubmission" class="form-control p-2"></textarea>
+
+                        <div class="form-group p-3">
+                            <input type="submit" id="submitButton" value="Submit" asp-route-subID="@Model.sub.ID" asp-route-id="@ViewBag.ID" asp-route-classID="@Model.Assignment.ClassID" class="btn btn-primary" />
+                        </div>
+
+
+                    </div>
+
+                </form>
+            
+                <div>
+                    <a asp-page="./AssignmentList" asp-route-id="@ViewBag.ID" asp-route-courseID="@Model.Assignment.ClassID">Back to Assignments</a>
+                </div>
+            </div>
+
+        @if (Model.sub.PointsEarned != null)
+        {
+            <div class="col-3" id="myDiv"></div>
+        }
+    </div>
+</body>
+</html>

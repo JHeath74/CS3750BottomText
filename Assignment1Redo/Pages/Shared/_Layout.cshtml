@@ -1,0 +1,110 @@
+﻿@{
+    // Get notification events for students
+    if (ViewBag.role == "Student")
+    {
+        string cacheItemKey = "User" + ViewBag.ID + "Events";
+        ViewBag.events = System.Web.Helpers.WebCache.Get(cacheItemKey);
+
+        // If event list wasn't found, set events to empty list
+        if (ViewBag.events == null)
+        {
+            ViewBag.events = new List<object>();
+        }
+    }
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BottomTextLMS</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-page="/Index" asp-route-id="@ViewBag.ID">BottomTextLMS</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Index" asp-route-id="@ViewBag.ID">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Profile/UserProfile" asp-route-id="@ViewBag.ID">Profile</a>
+                        </li>
+                        @if (ViewBag.role == "Student")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/StudentAccount/StudentAccount" asp-route-id="@ViewBag.ID" asp-route-payed="false">Account</a>
+                            </li>
+                        }
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Calendar/Calendar" asp-route-id="@ViewBag.ID">Calendar</a>
+                        </li>
+                        @if (ViewBag.role == "Student")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" id="registration" asp-area="" asp-page="/Registration/StudentRegistration" asp-route-id="@ViewBag.ID">Registration</a>
+                            </li>
+                        }
+                        else if (ViewBag.role == "Instructor")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Courses/CourseList" asp-route-id="@ViewBag.ID">Add Class</a>
+                            </li>
+                        }
+                        @if (ViewBag.role == "Instructor")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Submissions/AllAssignments" asp-route-id="@ViewBag.ID">Submissions</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                @if (ViewBag.role == "Student" && ViewBag.events.Count > 0)
+                {
+                    <div class="dropleft">
+                        <img class="dropdown-toggle" src="~/Files/bell.png" alt="Notification bell" data-toggle="dropdown" style="cursor:pointer"/>
+                        <ul class="dropdown-menu" style="min-width:stretch">
+                            <li class="dropdown-header" style="text-align:center">Notifications</li>
+                            @foreach (var e in ViewBag.events)
+                            {
+                                <li class="dropdown-divider"></li>
+                                <li class="dropdown-item">@e.ClassName - @e.AssignmentName - @e.EventType</li>
+                            }
+                        </ul>
+                    </div>
+                }
+                else
+                {
+                    <img src="~/Files/bell.png" alt="Notification bell" style="cursor:pointer"/>
+                }
+                <a class="nav-link text-dark" asp-area="" asp-page="/Account/Login">Log Out</a>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2021 - BottomTextLMS
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

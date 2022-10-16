@@ -1,0 +1,90 @@
+﻿@page "{id:int}"
+@model BottomTextLMS.Pages.Registration.RegistrationModel
+
+@{
+    ViewData["Title"] = "Student Registration";
+    ViewBag.ID = Model.student.ID;
+    ViewBag.role = Model.student.Role;
+}
+
+
+<h1>Student Registration</h1>
+<form method="post">
+    <div class="form-group">
+        <div class="container">
+            <div class="row p-2"></div>
+            <div class="row">
+                <div class="col-4">
+                    <label class="control-label">Department</label>
+                    <select id="deptInput" class="form-control" asp-for="selectedDept" asp-items="@Model.DepartmentList">
+                    </select>
+                </div>
+                <div class="col-5">
+                    <label class="control-label">Keyword</label>
+                    <input asp-for="ClassSearchText" class="form-control" />
+                </div>
+                <div class="col-1">
+                    <input id="searchBtn" type="submit" asp-page-handler="SearchCriteria" value="Search" class="btn btn-primary" style="position:absolute; bottom:0" />
+                </div>
+                <div class="col-1">
+                    <a id="clearBtn" asp-page-handler="OnGet" value="Clear" style="position:absolute; bottom:0">Clear</a>
+                </div>
+            </div>
+            <div class="row p-3"></div>
+        </div>
+
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Course Number
+                    </th>
+                    <th>
+                        Course Title
+                    </th>
+                    <th>
+                        Meeting Time
+                    </th>
+                    <th>
+                        Instructor Name
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Class) {
+                    <tr>
+                        <td>
+                            @item.ClassNumber
+                        </td>
+                        <td>
+                            @item.ClassName
+                        </td>
+                        <td>
+                            Room: @item.Room.RoomNumber <br /> Days: @item.DaysOfWeek <br /> @item.StartTime.ToString("hh:mm tt") - @item.EndTime.ToString("hh:mm tt")
+                        </td>
+                        <td>
+                            @item.User.FirstName @item.User.LastName
+                        </td>
+                        <td style="vertical-align: middle">
+                            <!-- loops through Enrollment table (currentEnrollment list) and changes bool to true if this student is enrolled in a specific class -->
+                            @foreach (Models.Enrollment enroll in Model.currentEnrollment) {
+                                if (enroll.StudentID == Model.student.ID && enroll.ClassID == item.ID) {
+                                    Model.isEnrolled = true;
+                                }
+                            }
+                            <!-- render "Register" button if student is not enrolled, render "Drop" button if student is enrolled -->
+                            @if (Model.isEnrolled) {
+                                <input id="dropBtn_registration_@item.ID" type="submit" asp-page-handler="DropStudent" asp-route-clickedID="@item.ID" asp-route-keyword="@Model.ClassSearchText" asp-route-dept="@Model.selectedDept" value="Drop" class="btn btn-primary" style="background-color: gray" />
+                                Model.isEnrolled = false;
+                            } else {
+                                <input id="registerBtn_registration_@item.ID" type="submit" asp-page-handler="RegisterStudent" asp-route-clickedID="@item.ID" asp-route-keyword="@Model.ClassSearchText" asp-route-dept="@Model.selectedDept" value="Register" class="btn btn-primary" />
+                                Model.isEnrolled = false;
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+</form>

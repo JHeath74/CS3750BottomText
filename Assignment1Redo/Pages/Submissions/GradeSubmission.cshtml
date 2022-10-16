@@ -1,0 +1,41 @@
+﻿@page
+@model BottomTextLMS.Pages.Submissions.GradeSubmissionModel
+@{
+    ViewData["Title"] = "Grade Submission";
+    ViewBag.ID = Model.prof.ID;
+    ViewBag.role = Model.prof.Role;
+}
+<h1>@Model.assignment.Title</h1>
+
+<p>Description: @Model.assignment.Description</p>
+
+<p>Max Points: @Model.assignment.MaxPoints</p>
+
+<p>Due Date: @Model.assignment.DueDate</p>
+
+@if (Model.submission.FileSubmission != null)
+{
+    <p>File: <a href="@Url.Page("GradeSubmission", "DownloadFile", new { filename = Model.submission.FileSubmission })">
+        Download Submission</a></p>
+}
+@if (Model.submission.TextSubmission != null)
+{
+    <textarea readonly>@Model.submission.TextSubmission</textarea>
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="submission.PointsEarned" class="control-label"></label>
+                <input type="number" min="0" asp-for="submission.PointsEarned" class="form-control" />
+                <span asp-validation-for="submission.PointsEarned" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Grade" class="btn btn-primary" asp-route-id="@ViewBag.ID" asp-route-assignID="@Model.submission.AssignmentID"
+                       asp-route-subID="@Model.submission.ID"/>
+            </div>
+        </form>
+    </div>
+</div>

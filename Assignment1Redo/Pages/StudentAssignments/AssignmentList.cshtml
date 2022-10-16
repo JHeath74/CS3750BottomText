@@ -1,0 +1,51 @@
+﻿@page
+@model BottomTextLMS.Pages.StudentAssignments.IndexModel
+
+@{ ViewData["Title"] = Model.course.ClassNumber + " - Assignment List";
+                ViewBag.ID = Model.student.ID;
+                ViewBag.role = Model.student.Role; }
+
+<h1>@Html.DisplayFor(model => model.course.ClassName) - Assignments</h1>
+<br />
+
+@if (ViewBag.role == "Student") {
+<div>
+    <p style="margin-bottom: 0;">Overall Grade: <span style="font-weight: bold; font-size: 30px;">@Model.LetterGrade</span></p>
+    <p><i style="font-weight: 12px;">(@Model.PointsEarned/@Model.TotalPointsPossible points earned)</i></p>
+</div>}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Assignment[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Assignment[0].DueDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Assignment[0].MaxPoints)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Assignment) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Title)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.DueDate)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.MaxPoints)
+    </td>
+    <td>
+        @if (item.AssignmentType == "Text Entry") {
+<a id="submission_@item.ID" asp-page="./TextSubmission" asp-route-id="@ViewBag.ID" asp-route-assignID="@item.ID">Submission</a> } else if (item.AssignmentType == "File") {
+<a asp-page="./FileSubmission" asp-route-id="@ViewBag.ID" asp-route-assignID="@item.ID">Submission</a>                }
+    </td>
+</tr>}
+    </tbody>
+</table>

@@ -1,0 +1,50 @@
+﻿@page
+@model BottomTextLMS.Pages.StudentAccount.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>CreditCard</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CreditCard.ID" />
+            <div class="form-group">
+                <label asp-for="CreditCard.CreditCardNumber" class="control-label"></label>
+                <input asp-for="CreditCard.CreditCardNumber" class="form-control" />
+                <span asp-validation-for="CreditCard.CreditCardNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreditCard.HolderName" class="control-label"></label>
+                <input asp-for="CreditCard.HolderName" class="form-control" />
+                <span asp-validation-for="CreditCard.HolderName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreditCard.ExpDate" class="control-label"></label>
+                <input asp-for="CreditCard.ExpDate" class="form-control" />
+                <span asp-validation-for="CreditCard.ExpDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreditCard.CVC" class="control-label"></label>
+                <input asp-for="CreditCard.CVC" class="form-control" />
+                <span asp-validation-for="CreditCard.CVC" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

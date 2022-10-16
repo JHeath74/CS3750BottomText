@@ -1,0 +1,82 @@
+﻿@page
+@model BottomTextLMS.Pages.Account.SignupModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign up - BottomTextLMS</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <div class="container">
+        <main role="main" class="pb-3">
+            <h1>Sign Up</h1>
+
+            <hr />
+            <div class="row">
+                <div class="col-md-4">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="myUser.FirstName" class="control-label"></label>
+                            <input asp-for="myUser.FirstName" class="form-control" />
+                            <span asp-validation-for="myUser.FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="myUser.LastName" class="control-label"></label>
+                            <input asp-for="myUser.LastName" class="form-control" />
+                            <span asp-validation-for="myUser.LastName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="myUser.BirthDate" class="control-label"></label>
+                            <input asp-for="myUser.BirthDate" class="form-control" />
+                            <span asp-validation-for="myUser.BirthDate" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="myUser.Email" class="control-label"></label>
+                            <input asp-for="myUser.Email" class="form-control" />
+                            <span asp-validation-for="myUser.Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="myUser.Password" class="control-label"></label>
+                            <input asp-for="myUser.Password" class="form-control" />
+                            <span asp-validation-for="myUser.Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="myUser.ConfirmPassword" class="control-label">Confirm Password</label>
+                            <input asp-for="myUser.ConfirmPassword" class="form-control" />
+                            <span asp-validation-for="myUser.ConfirmPassword" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="myUser.Role" class="control-label"></label>
+                            <div>
+                                <label><input type="radio" asp-for="myUser.Role" class="boost_radio" value="Student" /> Student</label>
+                                <label><input type="radio" asp-for="myUser.Role" class="boost_radio" value="Instructor" /> Instructor</label>
+                                <span asp-validation-for="myUser.Role" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Sign Up" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+<footer class="border-top footer text-muted">
+    <div class="container">
+        &copy; 2021 - BottomTextLMS
+    </div>
+</footer>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+
+</html>
